@@ -1,0 +1,393 @@
+<!-- vim: sw=4 ts=4 expandtab smartindent
+-->
+<!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <meta charset="utf-8" />
+            <title>📜 ced.quest ⚔️ </title>
+            <style>
+document, body {
+    margin: 0px;
+    padding: 0px;
+    overflow-y: scroll;
+    background-color: rgb(25, 50, 70);
+}
+
+.project {
+    position: static;
+
+    width: 50%;
+    aspect-ratio: 16 / 9;
+
+    background-color: black;
+
+    display: flex;
+    justify-content: center;
+
+    overflow: hidden;
+}
+
+.header {
+    width: 100%;
+    position: sticky;
+    top: 0px;
+    z-index: 2;
+
+    background: linear-gradient(to right, rgba(102, 102, 153, 0.8), rgba(128, 102, 153, 0.4), rgba(76, 76, 179, 0.8));
+
+    color: white;
+    -webkit-text-stroke: 0.2rem black;
+    font-family: monospace;
+
+    padding-left: 1rem;
+}
+
+
+
+.header > h1 {
+    font-size: 3rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.vignette {
+    position: absolute;
+    width: 50%;
+    aspect-ratio: 16 / 9;
+
+    pointer-events: none;
+
+    z-index: 1;
+
+    font-family: monospace;
+    color: transparent;
+    -webkit-text-stroke: 0px transparent;
+    transition: 1s color;
+    transition: 1s -webkit-text-stroke;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    box-shadow: 0 0 40px rgb(15,15,50) inset;
+}
+
+.project:hover > .vignette {
+    box-shadow: 0 0 130px rgb(20,20,60) inset;
+
+    color: white;
+    -webkit-text-stroke: 0.2rem black;
+    transition: 1s color;
+    transition: 1s -webkit-text-stroke;
+}
+
+.project:hover > .vignette > h2 {
+    -webkit-text-stroke: 0.1rem black;
+}
+
+.project:hover > .vignette > p {
+    background-color: rgba(200, 200, 250, 0.4);
+
+    margin: 0;
+    -webkit-text-stroke: 0.1rem black;
+    font-weight: bold;
+    width: 35rem;
+}
+
+.vignette > h1 {
+    float: right;
+    font-size: 3rem;
+    padding-right: 2rem;
+}
+
+.vignette > h2 {
+    float: right;
+    font-size: 2rem;
+    padding-right: 2rem;
+}
+
+.vignette > p {
+    text-align: right;
+    color: inherit;
+
+    float: right;
+    font-size: 2rem;
+    padding-right: 2rem;
+}
+
+.vignette::after {
+    content: '🔗';
+    color: transparent;
+    transition: 1s text-decoration;
+    transition: 1s color;
+    text-decoration: underline transparent;
+    font-size: 3rem;
+    filter: drop-shadow(0 0 5px black);
+
+    position: absolute;
+    bottom: 0.5rem;
+    left: 0.5rem;
+}
+
+.project:hover > .vignette::after {
+    color: white;
+    transition: 1s color;
+
+    transition: 1s text-decoration;
+    text-decoration: underline rgb(128, 153, 256);
+}
+
+img {
+    object-fit: cover;
+    transform: scale(1);
+    transition: transform 1s;
+}
+
+img:hover {
+    transform: scale(1.15);
+    transition: transform 1s;
+}
+
+body {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+            </style>
+        </head>
+<!-- collab4mb_video.mp4 -->
+
+    <body>
+        <!--
+        <img src="https://ced.quest/showcase/emojia.png"/>
+        <img src="https://ced.quest/showcase/idek.png"/>
+        <img src="https://ced.quest/showcase/rpg.png"/>
+
+        <img src="https://ced.quest/showcase/webraria.png"/>
+        <img src="https://ced.quest/showcase/sandwichsandbox_battle.gif"/>
+        <img src="https://ced.quest/showcase/sandwichsandbox_build.gif"/>
+
+        <img src="https://ced.quest/showcase/meadows.png"/>
+
+        <img src="https://ced.quest/showcase/stockrpg.png"/>
+        <img src="https://ced.quest/showcase/collab4mb.png"/>
+        -->
+
+        <div class="header">
+            <h1 style="filter:none; z-index: 1000;"> CEDRIC HUTCHINGS </h1>
+        </div>
+
+        <a href="https://passivelogic.com" class="project">
+            <div class="vignette">
+                <h1> Building Studio </h1>
+                <p> i work professionally on this 3D building editor </p>
+            </div>
+            <img src="showcase/building_studio.png"/>
+        </a>
+
+        <a href="https://passivelogic.com" class="project">
+            <div class="vignette">
+                <h1> B Studio - Site Mode </h1>
+                <p> turns map and elevation data into realtime 3D environment </p>
+            </div>
+            <img src="showcase/building_studio_site_mode2.png"/>
+        </a>
+
+        <a href="https://github.com/cedric-h/linear-webgl" class="project">
+            <div class="vignette">
+                <h1> WebGL Editor </h1>
+                <p> part of a collection of 30+ WebGL demos i made </p>
+            </div>
+            <img src="showcase/editor.png"/>
+        </a>
+
+        <a href="https://github.com/cedric-h/linear-webgl" class="project">
+            <div class="vignette">
+                <h1> WebGL Texture Painter </h1>
+                <p> part of a collection of 30+ WebGL demos i made </p>
+            </div>
+            <img src="showcase/paint.png"/>
+        </a>
+
+        <a href="https://github.com/cedric-h/cedcraft" class="project">
+            <div class="vignette">
+                <h1> "cedcraft" </h1>
+                <p> my webgl minecraft clone that loads instantly in your browser </p>
+            </div>
+            <img src="showcase/cedcraft.png"/>
+        </a>
+
+
+        <a href="https://github.com/collab4mb/space" class="project">
+            <div class="vignette">
+                <h1> Space Game Collab </h1>
+                <p> lil game made from scratch in C with friends </p>
+            </div>
+            <img src="showcase/collab4mb.png"/>
+        </a>
+
+        <a href="https://github.com/cedric-h/moji" class="project">
+            <div class="vignette">
+                <h1> Emojia </h1>
+                <p> funny lil renderer </p>
+            </div>
+            <img src="showcase/emojia.png"/>
+        </a>
+
+        <a href="https://github.com/lowmoya/swashbucklers" class="project">
+            <div class="vignette">
+                <h1> "swashbucklers" </h1>
+                <p> cute renderer </p>
+            </div>
+            <img src="showcase/idek.png"/>
+        </a>
+
+        <a href="https://github.com/cedric-h/rpgc" class="project">
+            <div class="vignette">
+                <h1> "rpg" </h1>
+                <p> a game you can play </p>
+            </div>
+            <img src="showcase/rpg.png"/>
+            <img src="showcase/rpg2.webp"/>
+        </a>
+
+        <a href="https://github.com/cedric-h/topdown" class="project">
+            <div class="vignette">
+                <h1> topdown juice playground </h1>
+                <p> animating with code is fun </p>
+            </div>
+            <img src="showcase/survivy.png"/>
+        </a>
+
+        <a href="https://github.com/cedric-h/treebunga" class="project">
+            <div class="vignette">
+                <h1> Cutesy Worldgen </h1>
+            </div>
+            <img src="showcase/treebunga.png"/>
+        </a>
+
+        <a href="https://github.com/hackagotchi/tile" class="project">
+            <div class="vignette">
+                <h1> Hexy Worldgen </h1>
+            </div>
+            <img src="showcase/hex.png"/>
+        </a>
+
+        <a href="https://github.com/cedric-h/meadows" class="project">
+            <div class="vignette">
+                <h1> "meadows" </h1>
+                <p> making a game in C with friends again </p>
+            </div>
+            <img src="showcase/meadows.webp"/>
+        </a>
+
+        <a href="https://hackclub.com/sprig" class="project">
+            <div class="vignette">
+                <h1> "Sprig" </h1>
+                <p> professional work; my firmware ran JS-based games on 0.25 GB RAM  </p>
+            </div>
+            <img src="showcase/sprig.png"/>
+        </a>
+
+        <a href="https://github.com/cedric-h/applookfat" class="project">
+            <div class="vignette">
+                <h2> Honey, does this WASM make my app look fat? </h2>
+                <p> WASM parser and visualizer in C. Shows size and traces fn calls </p>
+            </div>
+            <img src="showcase/applookfat.webp"/>
+        </a>
+
+        <a href="https://github.com/cedric-h/cave" class="project">
+            <div class="vignette">
+                <h1> Lil 2D sandbox </h1>
+            </div>
+            <img src="showcase/webraria.png"/>
+        </a>
+
+        <a href="https://github.com/cedric-h/mercantalism" class="project">
+            <div class="vignette">
+                <h1> "mercantilism" </h1>
+                <p> lil' tradin' game </p>
+            </div>
+            <img src="showcase/mercantilism.png"/>
+        </a>
+
+        <a href="https://github.com/cedric-h/qove" class="project">
+            <div class="vignette">
+                <h1> Qove </h1>
+                <p> crazy experiments in zig and pointilism </p>
+            </div>
+            <img src="showcase/zig.jpg"/>
+            <img src="showcase/qove.webp"/>
+            <img src="showcase/zig.png"/>
+        </a>
+
+        <a href="https://github.com/cedric-h/hkgi" class="project">
+            <div class="vignette">
+                <h1> Hackagotchi </h1>
+                <p> multiplayer trading/farming game </p>
+            </div>
+            <img src="showcase/hackagotchi.webp"/>
+        </a>
+
+        <a href="https://github.com/cedric-h/linear-webgl" class="project">
+            <div class="vignette">
+                <h1> Graph WebGL demo </h1>
+                <p> part of a collection of 30+ WebGL demos i made </p>
+            </div>
+            <img src="showcase/graph.png"/>
+        </a>
+
+        <a href="https://github.com/cedric-h/linear-webgl" class="project">
+            <div class="vignette">
+                <h1> "Quantum Explorer" </h1>
+                <p> From < 1 fps on a $3k macbook to working on a $30 rpi. </p>
+                <br/>
+                <p> replaced SVG with WebGL and x500-ed how much we could visualize. </p>
+            </div>
+            <img src="showcase/quantum_explorer.png"/>
+        </a>
+
+        <a href="https://github.com/cedric-h/sandwichsandbox" class="project">
+            <div class="vignette">
+                <h1> "Sandwich Sandbox" </h1>
+                <p> tower defense, but you also make the map </p>
+            </div>
+            <img src="showcase/sandenyobox.png"/>
+            <img src="showcase/sandwichsandbox_battle.gif"/>
+            <img src="showcase/sandwichsandbox_build.gif"/>
+        </a>
+
+        <a href="https://github.com/cedric-h/handbox" class="project">
+            <div class="vignette">
+                <h1> "handbox" </h1>
+                <p> i made a game about making machines that make things </p>
+            </div>
+            <img src="showcase/handbox.webp"/>
+        </a>
+
+        <a href="https://github.com/cedric-h/stockrpg" class="project">
+            <div class="vignette">
+                <h1> wgpu + rust experiments </h1>
+            </div>
+            <img src="showcase/stockrpg.png"/>
+        </a>
+
+        <a href="https://github.com/cedric-h/lab" class="project">
+            <div class="vignette">
+                <h1> "lab" </h1>
+                <p> 3D multiplayer Node/THREE.js based game thing </p>
+            </div>
+            <img src="showcase/lab.png"/>
+        </a>
+
+        <a href="https://github.com/substandardstudios/gdi" class="project">
+            <div class="vignette">
+                <h1> "graphical deity interface" </h1>
+                <p> a kid tries to make game </p>
+            </div>
+            <img src="showcase/gdi.png"/>
+        </a>
+
+    </body>
+</html>
