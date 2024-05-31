@@ -51,6 +51,14 @@ document, body {
     margin-bottom: 0.5rem;
 }
 
+body {
+    --color-text: rgb(38%, 70%, 90%);
+    --color-text-stroke: black;
+
+    --color-text-start: transparent;
+    --color-text-start-stroke: transparent;
+}
+
 .vignette {
     position: absolute;
     width: 50%;
@@ -59,8 +67,8 @@ document, body {
     z-index: 1;
 
     font-family: monospace;
-    color: transparent;
-    -webkit-text-stroke: 0.2rem transparent;
+    color: var(--color-text-start);
+    -webkit-text-stroke: 0.2rem var(--color-text-start-stroke);
     transition-property: color -webkit-text-stroke;
     transition-duration: 1s;
 
@@ -70,11 +78,27 @@ document, body {
 }
 
 .vignette:hover {
-    --color-text: rgb(38%, 70%, 90%);
     color: var(--color-text);
-    -webkit-text-stroke: 0.2rem black;
+    -webkit-text-stroke: 0.2rem var(--color-text-stroke);
     transition-property: color -webkit-text-stroke;
     transition-duration: 1s;
+}
+
+@media (orientation: portrait) {
+    .project {
+        width: 100%;
+    }
+
+    .vignette {
+        width: 100%;
+    }
+
+    body {
+        --color-text-start:        var(--color-text       );
+        --color-text-start-stroke: var(--color-text-stroke);
+    }
+
+    /* html { font-size: 8%; }; */
 }
 
 .vignette > h1 {
@@ -84,7 +108,7 @@ document, body {
 }
 
 .vignette:hover > h2 {
-    -webkit-text-stroke: 0.1rem black;
+    -webkit-text-stroke: 0.1rem var(--color-text-stroke);
 }
 .vignette > h2 {
     float: right;
@@ -93,9 +117,9 @@ document, body {
 }
 
 .vignette > a {
-    color: transparent;
-    text-decoration: underline transparent;
-    -webkit-text-stroke: 0.1rem transparent;
+    color: var(--color-text-start);
+    text-decoration: underline var(--color-text-start);
+    -webkit-text-stroke: 0.1rem var(--color-text-start-stroke);
     transition-property: color text-decoration -webkit-text-stroke;
     transition-duration: 1s;
 
@@ -112,7 +136,7 @@ document, body {
 .vignette:hover > a {
     color: var(--color-text);
     text-decoration: underline var(--color-text);
-    -webkit-text-stroke: 0.1rem black;
+    -webkit-text-stroke: 0.1rem var(--color-text-stroke);
     transition-property: color text-decoration -webkit-text-stroke;
     transition-duration: 1s;
 
