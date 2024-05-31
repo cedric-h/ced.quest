@@ -46,6 +46,8 @@ document, body {
 }
 
 .header > h1 {
+    text-align: center;
+
     font-size: 3rem;
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
@@ -93,26 +95,23 @@ body {
         width: 100%;
     }
 
+    .vignette > a {
+        background-color: rgba(200, 200, 250, 0.4);
+    }
+
     body {
         --color-text-start:        var(--color-text       );
         --color-text-start-stroke: var(--color-text-stroke);
     }
 
-    /* html { font-size: 8%; }; */
+    html {
+        font-size: 150%;
+    }
 }
 
 .vignette > h1 {
     float: right;
     font-size: 3rem;
-    padding-right: 2rem;
-}
-
-.vignette:hover > h2 {
-    -webkit-text-stroke: 0.1rem var(--color-text-stroke);
-}
-.vignette > h2 {
-    float: right;
-    font-size: 1.5rem;
     padding-right: 2rem;
 }
 
@@ -303,7 +302,7 @@ body {
 
         <div class="project">
             <div class="vignette">
-                <h2> Honey, does this WASM make my app look fat? </h2>
+                <h1> wasm toy </h1>
                 <a href="https://github.com/cedric-h/applookfat"> WASM parser and visualizer in C. Shows size and traces fn calls </a>
             </div>
             <img src="showcase/applookfat.webp"/>
