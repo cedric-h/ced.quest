@@ -1,0 +1,132 @@
+<!-- vim: sw=4 ts=4 expandtab smartindent
+-->
+<!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <meta charset="utf-8" />
+            <title>📜 chromium + metal debugger ⚔️ </title>
+            <style>
+document, body {
+    margin: 0px;
+    padding: 0px;
+    overflow-y: scroll;
+    background-color: rgb(1%, 5%, 5%);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    overflow: hidden;
+
+    width: 100%;
+    position: sticky;
+    top: 0px;
+    z-index: 2;
+
+    background: linear-gradient(to right, rgba(10%, 90%, 90%, 0.95), rgba(38%, 70%, 90%, 0.95));
+    color: black;
+
+    font-family: monospace;
+}
+
+.header > h2 > a {
+    color: black;
+}
+
+.header > h1 {
+    text-align: center;
+
+    font-size: 3rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.content {
+    font-family: monospace;
+    color: white;
+    padding: 2rem;
+
+    font-size: 170%;
+}
+
+.content a {
+    color: #1cd1ff;
+}
+
+.content a:visited {
+    color: #d93cd9;
+}
+
+input {
+    font-size: 2rem;
+    font-family: monospace;
+    font-weight: bold;
+}
+
+            </style>
+        </head>
+    <body>
+
+        <div class="header">
+            <h2 style="padding-left: 1rem;"> blog </h2>
+            <h1> cedric hutchings </h1>
+            <h2 style="padding-right:1rem;"> <a href="./contact.html"> contact </a> </h2>
+        </div>
+
+        <div class="content">
+
+<h1>
+How many Draw Calls for your site?
+</h1>
+
+<h2>
+Metal Shader Debugger + Chromium
+</h2>
+
+<h3>
+ Debug your WebGL, and optimize anything GPU-bound.
+</h3>
+
+<h1> 0. Context </h1>
+
+<p>
+You probably know, academically, that browsers use shaders and graphics programming to performantly (or not) turn your HTML and CSS into stuff on your screen.
+</p>
+
+<p>
+In fact, if you make websites that do non-trivial things, you've probably seen those green "GPU" bars pop up in the Devtools Profiler. They're pretty opaque; they'll tell you if your site is GPU-bound, but they won't tell you why or how to fix it ... but you can find out, on MacOS, using this guide.
+</p>
+
+<p>
+Similar concepts apply on other platforms using tools like NVIDIA NSight, AMD GPU Detective, and <a href="https://devblogs.microsoft.com/pix/">PIX</a>, among others. However, attaching these tools to an executable on your machine is comparatively simpler, and you can figure out how if you're determined. Doing so on Mac ... involves some extra steps.
+</p>
+
+<p>
+The Web needs the best performance tooling it can get.
+<a href="https://danluu.com/slow-device/">There are popular classes of phone which can run PUBG at 40fps, but scroll the web at less than 0.4fps.</a> While a lot of this is invasive JS going nuts tracking everything, I have run into issues (especially around Canvas and SVG) where websites can get GPU-bound. If you run into a similar issue, this guide can be used to give you insight into the problem.
+</p>
+
+<h1> 1. Getting Chromium open in XCode </h1>
+
+<p>
+Considering how much work the ecosystem has to do, it's quite tragic that you have to compile Chromium from source to get any kind of detail about how the GPU is being used. The Chromium docs suggest that you can get around this
+<a href="https://chromium.googlesource.com/chromium/src/+/refs/heads/main/docs/mac/debugging.md#chrome-builds"> here.</a>
+If for some reason building from source isn't an option for you, I suggest this route.
+If you manage to get it to work,
+<a href="https://ced.quest/contact">shoot me an email</a> and I'll update this guide!
+</p>
+
+<p>
+While it does take time, compiling chromium from source isn't really that difficult.
+The Chromium team maintains an excellent guide 
+<a href="https://chromium.googlesource.com/chromium/src/+/master/docs/mac_build_instructions.md">here.</a>
+</p>
+
+<h1> 2. Chromium is open in XCode. Now what? </h1>
+
+        </div>
+
+    </body>
+</html>
