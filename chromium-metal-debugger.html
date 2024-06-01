@@ -4,7 +4,8 @@
     <html lang="en">
         <head>
             <meta charset="utf-8" />
-            <title>📜 chromium + metal debugger ⚔️ </title>
+            <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📜</text></svg>">
+            <title>chromium + metal debugger ⚔️ </title>
             <style>
 document, body {
     margin: 0px;
@@ -51,12 +52,21 @@ document, body {
     font-size: 170%;
 }
 
+.inline-code {
+    font-style: italic;
+    color: black;
+    background-color: white;
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+}
+
 .content a {
     color: #1cd1ff;
 }
 
 .content a:visited {
-    color: #d93cd9;
+    /* color: #d93cd9; */
+    color: #8a3cd9;
 }
 
 input {
@@ -78,16 +88,35 @@ input {
         <div class="content">
 
 <h1>
-How many Draw Calls for your site?
+Metal Shader Debugger + Chromium
+<br/>
+<i style="font-size:1.2rem;color:rgb(70% 70% 70%);"> How many draw calls for my website? </i>
 </h1>
 
-<h2>
-Metal Shader Debugger + Chromium
-</h2>
 
-<h3>
- Debug your WebGL, and optimize anything GPU-bound.
-</h3>
+<hr/>
+
+<p>
+<b> TL:DR; This guide is useful for two kinds of work </b>
+<ul>
+    <li>
+        Canvas/SVG, Performance optimization
+    </li>
+    <li>
+        WebGL, Debugging and performance (think <a href="https://spector.babylonjs.com/">spector.js</a> on steroids)
+    </li>
+</ul>
+</p>
+
+<hr/>
+
+<img width="30%" src="./metal/cedcraft_open0.png"/>
+<img width="30%" src="./metal/cedcraft_open1.png"/>
+<img width="30%" src="./metal/cedcraft_open2.png"/>
+<br/>
+<i style="font-size:1.2rem;color:rgb(70% 70% 70%);">
+<a href='https://ced.quest/craft'>WebGL program</a> open with summary, dependency graph, and performance views
+</i>
 
 <h1> 0. Context </h1>
 
@@ -96,35 +125,243 @@ You probably know, academically, that browsers use shaders and graphics programm
 </p>
 
 <p>
-In fact, if you make websites that do non-trivial things, you've probably seen those green "GPU" bars pop up in the Devtools Profiler. They're pretty opaque; they'll tell you if your site is GPU-bound, but they won't tell you why or how to fix it ... but you can find out, on MacOS, using this guide.
-</p>
-
-<p>
-Similar concepts apply on other platforms using tools like NVIDIA NSight, AMD GPU Detective, and <a href="https://devblogs.microsoft.com/pix/">PIX</a>, among others. However, attaching these tools to an executable on your machine is comparatively simpler, and you can figure out how if you're determined. Doing so on Mac ... involves some extra steps.
+In fact, if you make websites that do non-trivial things (tools, games, etc.), you've probably seen those green "GPU" bars pop up in the Devtools Profiler. They're pretty opaque; they'll tell you if your site is GPU-bound, but they won't tell you why or how to fix it ... but you can find out, on MacOS, using this guide.
 </p>
 
 <p>
 The Web needs the best performance tooling it can get.
-<a href="https://danluu.com/slow-device/">There are popular classes of phone which can run PUBG at 40fps, but scroll the web at less than 0.4fps.</a> While a lot of this is invasive JS going nuts tracking everything, I have run into issues (especially around Canvas and SVG) where websites can get GPU-bound. If you run into a similar issue, this guide can be used to give you insight into the problem.
+<a href="https://danluu.com/slow-device/">There are popular classes of phone which can run PUBG at 40fps, but scroll the web at less than 0.4fps.</a> While a lot of this is JS going nuts invasively tracking everything, I have run into issues (especially around Canvas and SVG) where websites can get GPU-bound. If you run into a similar issue, this guide can be used to give you insight into the problem.
 </p>
 
-<h1> 1. Getting Chromium open in XCode </h1>
+<img width="50%" src="./metal/popular_demand.png"/>
+<br/>
+<i style="font-size:1.2rem;color:rgb(70% 70% 70%);">
+The Graphics Programming Discord wants renderdoc on Mac for WebGL!
+</i>
 
 <p>
-Considering how much work the ecosystem has to do, it's quite tragic that you have to compile Chromium from source to get any kind of detail about how the GPU is being used. The Chromium docs suggest that you can get around this
-<a href="https://chromium.googlesource.com/chromium/src/+/refs/heads/main/docs/mac/debugging.md#chrome-builds"> here.</a>
-If for some reason building from source isn't an option for you, I suggest this route.
+<h2> Other platforms </h2>
+<ul>
+    <li>
+        Performance + Debugging WebGL
+        <ul>
+            <li> NVIDIA Nsight </li>
+            <li> AMD GPU Detective </li>
+            <li> <a href="https://devblogs.microsoft.com/pix/">PIX</a> </li>
+        </ul>
+    </li>
+    <li>
+        Debugging Only (useful for WebGL dev)
+        <ul>
+            <li> renderdoc (guide for Chromium <a href="https://edw.is/renderdoc-webgl/">here</a>) </li>
+        </ul>
+    </li>
+</ul>
+<i> Because of MacOS codesigning/security precautions, similar processes are simpler on other platforms. </i>
+</p>
+
+<h1> 1. Making Chromium debuggable </h1>
+
+<p>
+If you simply open XCode and try to attach it to Chromium, you'll get a permissions error. There are two ways to get around this.
+</p>
+
+<ol>
+    <li>
+        <a href="https://chromium.googlesource.com/chromium/src/+/main/docs/mac_build_instructions.md">
+        build Chromium from source.
+        </a>
+    </li>
+    <li>
+        <a href="https://chromium.googlesource.com/chromium/src/+/refs/heads/main/docs/mac/debugging.md#chrome-builds">
+        disable SIP/sign the code.
+        </a>
+    </li>
+</ol>
+
+<p>
+Surprisingly, I found building Chromium to be quite well documented and almost painless.
+You just paste some shell commands into your console, make some tweaks in XCode, and come back the next morning.
+</p>
+
+<p>
+Simply follow 
+<a href="https://chromium.googlesource.com/chromium/src/+/main/docs/mac_build_instructions.md">the guide</a>
+up to "Setting up the build"
+(but not including <span class="inline-code">gn gen out/Default</span>),
+then hop to step 2 of this guide (Running Chromium in XCode).
+
+<p>
+I did have to edit
+<span class="inline-code">BUILD.gn</span>
+and set
+<span class="inline-code">treat_warnings_as_errors = false</span>
+</p>
+
+<p>
+I haven't gotten the codesigning approach to work.
+I am skeptical that it could ever work with the Metal Debugger because I cannot debug a local Chromium instance without having it built it in XCode.
 If you manage to get it to work,
-<a href="https://ced.quest/contact">shoot me an email</a> and I'll update this guide!
+<a href="https://ced.quest/contact">shoot me an email</a> with details and I'll update this guide!
+</p>
+
+<h1> 2. Running Chromium in XCode </h1>
+
+<p>
+Opening Chromium in XCode is an extremely laggy and painful experience, so I really wanted this to be possible without doing so.
+However, upon opening an empty XCode project and selecting "Attach to Process" -> "Chromium Helper (GPU)" I had the same experience as <a href="https://stackoverflow.com/questions/77829206/apple-metal-frame-capture-does-not-work-in-xcode-15">this stackoverflow user</a>.
 </p>
 
 <p>
-While it does take time, compiling chromium from source isn't really that difficult.
-The Chromium team maintains an excellent guide 
-<a href="https://chromium.googlesource.com/chromium/src/+/master/docs/mac_build_instructions.md">here.</a>
+Therefore, I'm proceeding under the assumption that you have to have Chromium built in XCode for this to work.
 </p>
 
-<h1> 2. Chromium is open in XCode. Now what? </h1>
+<p>
+This means you need to follow <a href="https://chromium.googlesource.com/chromium/src/+/main/docs/mac_build_instructions.md#using-xcode_ninja-hybrid">this bit</a> of the "Building Chromium" guide.
+</p>
+
+<p>
+<span class="inline-code">gn gen out/gn --ide=xcode</span>
+</p>
+
+<p>
+<span class="inline-code">open out/gn/all.xcodeproj</span>
+</p>
+
+<p>
+You should be greeted with this.
+</p>
+
+<img width="60%" src="./metal/scheming.png"/>
+<br/>
+
+<p>
+Click "Automatically Create Schemes."
+</p>
+
+<p>
+The tab will freeze for 15-30 seconds.
+</p>
+
+<p>
+Next, select the <span class="inline-code">chrome_app</span> scheme. Then, edit it.
+</p>
+
+<img width="90%" src="./metal/edit_scheme.webp"/>
+<br/>
+<p>
+Edit the <span class="inline-code">chrome_app</span> scheme.
+</p>
+<hr/>
+
+<img width="60%" src="./metal/edit_scheme_0.png"/>
+<br/>
+<p>
+Simply click the "Options" tab. No other action is necessary here.
+</p>
+<p>
+"Options" may already be the active tab.
+</p>
+<hr/>
+
+<img width="60%" src="./metal/edit_scheme_3.webp"/>
+<br/>
+<p>
+Set "GPU Frame Capture" to Metal.
+</p>
+<p>
+This will ensure you get a metal icon to click on your toolbar in subsequent steps.
+</p>
+<hr/>
+
+<img width="60%" src="./metal/edit_scheme_2.png"/>
+<br/>
+<p>
+Add the <span class="inline-code">--no-sandbox</span> argument.
+</p>
+<p>
+Set <span class="inline-code">CHROMIUM_LLDBINIT_SOURCED=1</span>.
+</p>
+<p>
+This is necessary to allow opening Chromium in LLDB in XCode.
+</p>
+<hr/>
+
+<img width="60%" src="./metal/build.png"/>
+<br/>
+<p>
+Click the "Play" button to begin a build.
+</p>
+<p>
+Then, go to the "Build Artifacts" tab.
+</p>
+<p>
+Click "Build" to see a log of compilation.
+</p>
+<hr/>
+
+<h2> The build may take some time (hours) to complete. </h2>
+<hr/>
+
+<h1> 3. Attaching the Metal Debugger to Chromium </h1>
+
+<p>
+Once the build completes, Chromium should open.
+</p>
+
+<p>
+Now, inside Chromium, open your app, or do something else GPU intensive, like open <a href="https://ced.quest/cedcraft">cedcraft</a>.
+</p>
+
+<img width="60%" src="./metal/attach_to_gpu.webp"/>
+<br/>
+<p>
+Select "Debug" from the top toolbar.
+</p>
+<p>
+Select "Attach to Process."
+</p>
+<p>
+Select "Chromium Helper (GPU)."
+</p>
+<hr/>
+
+<img width="60%" src="./metal/fancy_M.webp"/>
+<br/>
+<p>
+Select the Metal Icon on the middle/bottom toolbar.
+</p>
+<hr/>
+
+<img width="60%" src="./metal/not_frame.webp"/>
+<br/>
+<p>
+"Frame" captures, in my experience, never terminate.
+</p>
+<p>
+Select a "Command Queue."
+</p>
+<p>
+Generally, one is associated with Chromium's internal render processes,
+and the other(s) can be your WebGL Context(s).
+</p>
+<p>
+I don't know of a way to identify which is which beforehand; you will inevitably see internal Chromium UI captures at least once.
+</p>
+<hr/>
+
+<img width="60%" src="./metal/more_is_good.png"/>
+<br/>
+<p>
+There is no clear "Frame" delineation, but usually 10 command buffers captures enough data to be useful.
+</p>
+<p>
+You can press the fancy blue button now.
+</p>
+<p>
+Optionally, click "Profile after Replay" beforehand.
+</p>
+<hr/>
 
         </div>
 
