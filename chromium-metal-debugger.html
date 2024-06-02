@@ -346,8 +346,12 @@ Generally, one is associated with Chromium's internal render processes,
 and the other(s) can be your WebGL Context(s).
 </p>
 <p>
-I don't know of a way to identify which is which beforehand; you will inevitably see internal Chromium UI captures at least once.
+I don't know of a way to identify which is which beforehand; you will inevitably see internal Chromium UI captures if you do this for long enough.
 </p>
+<p>
+Note that XCode often freezes for a bit at this step, usually until you force Chromium to do something GPU intensive.
+</p>
+
 <hr/>
 
 <img width="60%" src="./metal/more_is_good.png"/>
@@ -361,7 +365,22 @@ You can press the fancy blue button now.
 <p>
 Optionally, click "Profile after Replay" beforehand.
 </p>
+<p>
+Note that if you do accidentally grab Chrome's command buffer, the Capture will not terminate until you force Chrome's UI/HTML UI to render enough times to fill the command buffer.
+</p>
+<p>
+If simply using your WebGL app causes the command buffer recording to complete, you know you have the right one.
+</p>
 <hr/>
+
+<p>
+You should be good to go!
+</p>
+
+<p>
+Thank you so much for using my guide. If you want to be notified if I ever make a better version of it in the future,
+<a href="https://ced.quest/contact">join the newsletter!</a>
+</p>
 
         </div>
 
