@@ -62,6 +62,16 @@ input {
     color:teal;
 }
 
+
+.content a {
+    color: #1cd1ff;
+}
+
+.content a:visited {
+    /* color: #d93cd9; */
+    color: #8a3cd9;
+}
+
 /* @media (orientation: portrait) {  */
 /*     html {                        */
 /*         font-size: 150%;          */
@@ -74,12 +84,19 @@ input {
 
         <div class="header">
             <h2 style="padding-left: 1rem;"> <a href="./blog.html">blog</a> </h2>
-            <h1> cedric hutchings </h1>
-            <h2 style="padding-right:1rem;"> <a href="./index.html">home</a> </h2>
+            <h1> <a style="color:black;" href="./index.html"> cedric hutchings </a> </h1>
+            <h2 style="padding-right:1rem;"> <a href="./contact.html">contact</a> </h2>
         </div>
 
         <div class="content">
-            <h1> <a href="./chromium-metal-debugger.html"> chromium + metal debugger </a> </h1>
+            <p>
+              Some of these are hosted on github; I might move them here ... but they're probably
+              more discoverable where they are anyway.
+            </p>
+            <h3> Jun 17, 2024 <a href="https://github.com/cedric-h/c-website"> C website </a> </h3>
+            <h3> Jun 1 , 2024 <a href="./chromium-metal-debugger.html"> chromium + metal debugger </a> </h3>
+            <h3> Apr 17, 2023 <a href="https://github.com/cedric-h/byron/blob/main/toybox/voronoi.md"> dumb voronoi for beating up 3D models</a> </h3>
+            <h3> Nov 20, 2022 <a href="https://github.com/cedric-h/wq/blob/main/README.md"> hot reloading in C </a> </h3>
         </div>
 
     </body>
